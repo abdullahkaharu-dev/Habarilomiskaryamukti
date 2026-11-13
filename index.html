@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HABARI LO - Media Informasi MIS Al-Awwaliyah Karyamukti</title>
+    
+    <!-- Memuat Tailwind CSS untuk tata letak responsif dan modern -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Memuat Google Fonts: Cinzel & Playfair Display untuk kesan editorial resmi, Plus Jakarta Sans untuk keterbacaan optimal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Playfair+Display:ital,wght@0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Konfigurasi Kustom Tailwind untuk Warna & Tipografi -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emeraldDeep: '#022c22',
+                        emeraldPrimary: '#064e3b',
+                        emeraldRich: '#047857',
+                        goldPrimary: '#d4af37',
+                        goldLight: '#f3e5ab',
+                        goldDark: '#aa820a',
+                        paperWhite: '#fdfdfb'
+                    },
+                    fontFamily: {
+                        masthead: ['Cinzel', 'serif'],
+                        headline: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Ornamen Pola Geometris Islami Modern & Minimalis (SVG Data URI) */
+        .islamic-pattern-bg {
+            background-color: #033629;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%23d4af37' stroke-width='0.75' stroke-opacity='0.14'%3E%3Cpath d='M30 0l8.787 8.787L51.213 8.787 51.213 21.213 60 30l-8.787 8.787v12.426H38.787L30 60l-8.787-8.787H8.787V38.787L0 30l8.787-8.787V8.787h12.426L30 0zm0 10l-5.858 5.858H15.858v8.284L10 30l5.858 5.858v8.284h8.284L30 50l5.858-5.858h8.284v-8.284L50 30l-5.858-5.858v-8.284h-8.284L30 10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .islamic-subtle-light {
+            background-color: #f8faf9;
+            background-image: url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23064e3b' stroke-width='0.5' stroke-opacity='0.04'%3E%3Cpolygon points='24,2 30,18 46,24 30,30 24,46 18,30 2,24 18,18'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Garis Dekoratif Emas Mewah */
+        .gold-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #aa820a 15%, #f3e5ab 50%, #aa820a 85%, transparent 100%);
+        }
+
+        .gold-border-gradient {
+            border: 1px solid rgba(212, 175, 55, 0.45);
+            box-shadow: 0 10px 30px -10px rgba(2, 44, 34, 0.15);
+        }
+
+        /* Peningkatan Kualitas Visual Foto Secara Natural (Pencahayaan, Ketajaman, Warna) */
+        .photo-enhanced {
+            filter: contrast(1.07) saturate(1.13) brightness(1.04);
+            image-rendering: -webkit-optimize-contrast;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+        }
+
+        .photo-frame:hover .photo-enhanced {
+            transform: scale(1.015);
+        }
+
+        /* Drop Cap Jurnalistik pada Paragraf Pembuka */
+        .journal-dropcap::first-letter {
+            float: left;
+            font-family: 'Playfair Display', serif;
+            font-size: 3.4rem;
+            line-height: 0.85;
+            padding-top: 4px;
+            padding-right: 12px;
+            padding-left: 2px;
+            color: #064e3b;
+            font-weight: 800;
+        }
+
+        /* Mode Cetak / Export Bersih */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: #ffffff !important;
+            }
+            .portal-container {
+                box-shadow: none !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+        }
+    </style>
+</head>
+<body class="islamic-subtle-light text-slate-800 font-sans antialiased selection:bg-emeraldPrimary selection:text-goldLight">
+
+    <!-- Panel Kontrol Redaksi (Dapat disembunyikan saat presentasi/cetak) -->
+    <div class="no-print bg-emeraldDeep text-white border-b border-goldPrimary/30 sticky top-0 z-50 shadow-md">
+        <div class="max-w-6xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+            <div class="flex items-center gap-2">
+                <span class="inline-block w-2.5 h-2.5 rounded-full bg-goldPrimary animate-pulse"></span>
+                <span class="font-medium text-goldLight tracking-wide">Mode Portal Berita Digital HD</span>
+                <span class="hidden md:inline text-emerald-200/70">| Dokumentasi Foto Resmi Terpasang</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="toggle-enhance-btn" onclick="togglePhotoEnhancement()" class="bg-emeraldRich hover:bg-emerald-600 text-white px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1.5 border border-goldPrimary/40 shadow-sm">
+                    <svg class="w-4 h-4 text-goldLight" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                    <span id="enhance-label">Peningkatan HD: Aktif</span>
+                </button>
+
+                <label for="upload-both-btn" class="cursor-pointer bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1.5 border border-white/15">
+                    <svg class="w-4 h-4 text-goldLight" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span>Ganti Foto</span>
+                </label>
+                <input type="file" id="upload-both-btn" accept="image/*" multiple class="hidden" onchange="handleMultiplePhotos(event)">
+
+                <button onclick="copyArticleText()" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1.5 border border-white/15">
+                    <svg class="w-4 h-4 text-goldPrimary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    <span id="copy-label">Salin Naskah</span>
+                </button>
+
+                <button onclick="window.print()" class="bg-goldPrimary hover:bg-amber-400 text-emeraldDeep px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    <span>Cetak / PDF</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifikasi Toast Non-Alert -->
+    <div id="toast-message" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-emeraldDeep text-white border border-goldPrimary px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 text-sm">
+        <span class="w-2 h-2 rounded-full bg-goldPrimary"></span>
+        <span id="toast-text">Pesan sistem</span>
+    </div>
+
+    <!-- KONTEN UTAMA PORTAL BERITA -->
+    <main class="max-w-6xl mx-auto my-6 sm:my-10 px-3 sm:px-6">
+        <article class="portal-container bg-paperWhite rounded-2xl overflow-hidden shadow-2xl border border-emeraldPrimary/15">
+            
+            <!-- 1. BAGIAN PALING ATAS & 2. HEADER IDENTITAS MEDIA -->
+            <header class="islamic-pattern-bg relative text-white pt-7 pb-8 px-6 sm:px-12 text-center overflow-hidden">
+                <!-- Aksen Sudut Geometris Islami -->
+                <svg class="absolute top-0 left-0 w-28 h-28 text-goldPrimary/20 pointer-events-none" viewBox="0 0 100 100" fill="none">
+                    <path d="M0 0 H100 L0 100 Z" fill="currentColor" fill-opacity="0.1"/>
+                    <path d="M0 20 H60 M20 0 V60 M0 40 H40 M40 0 V40" stroke="currentColor" stroke-width="1"/>
+                    <polygon points="18,18 26,10 34,18 26,26" stroke="currentColor" stroke-width="1.2"/>
+                </svg>
+                <svg class="absolute top-0 right-0 w-28 h-28 text-goldPrimary/20 pointer-events-none transform scale-x-[-1]" viewBox="0 0 100 100" fill="none">
+                    <path d="M0 0 H100 L0 100 Z" fill="currentColor" fill-opacity="0.1"/>
+                    <path d="M0 20 H60 M20 0 V60 M0 40 H40 M40 0 V40" stroke="currentColor" stroke-width="1"/>
+                    <polygon points="18,18 26,10 34,18 26,26" stroke="currentColor" stroke-width="1.2"/>
+                </svg>
+
+                <!-- Strip Informasi Edisi Resmi -->
+                <div class="relative z-10 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-[11px] sm:text-xs uppercase tracking-[0.2em] text-goldLight/90 font-semibold mb-4">
+                    <span>PORTAL WARTA PENDIDIKAN & BUDAYA</span>
+                    <span class="text-goldPrimary">•</span>
+                    <span>KABUPATEN GORONTALO</span>
+                    <span class="text-goldPrimary">•</span>
+                    <span>EDISI PERSIAPAN HAB KE-81</span>
+                </div>
+
+                <!-- 1. Logo / Identitas Media HABARI LO -->
+                <div class="relative z-10 inline-flex flex-col items-center">
+                    <div class="flex items-center gap-2.5 sm:gap-3.5">
+                        <!-- Emblem Bintang Delapan Islami (Rub el Hizb) -->
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8 text-goldPrimary drop-shadow" viewBox="0 0 48 48" fill="none">
+                            <rect x="10" y="10" width="28" height="28" stroke="currentColor" stroke-width="2" />
+                            <rect x="10" y="10" width="28" height="28" transform="rotate(45 24 24)" stroke="currentColor" stroke-width="2" />
+                            <circle cx="24" cy="24" r="5" fill="currentColor" />
+                        </svg>
+                        
+                        <h1 class="font-masthead text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-[0.16em] text-transparent bg-clip-text bg-gradient-to-b from-white via-goldLight to-goldPrimary drop-shadow-sm">
+                            HABARI LO
+                        </h1>
+
+                        <svg class="w-7 h-7 sm:w-8 sm:h-8 text-goldPrimary drop-shadow" viewBox="0 0 48 48" fill="none">
+                            <rect x="10" y="10" width="28" height="28" stroke="currentColor" stroke-width="2" />
+                            <rect x="10" y="10" width="28" height="28" transform="rotate(45 24 24)" stroke="currentColor" stroke-width="2" />
+                            <circle cx="24" cy="24" r="5" fill="currentColor" />
+                        </svg>
+                    </div>
+
+                    <!-- Garis Dekoratif Emas -->
+                    <div class="w-full max-w-sm my-2.5 gold-divider"></div>
+
+                    <!-- 2. Bagian Header: Nama Madrasah -->
+                    <p class="text-xs sm:text-sm md:text-base font-bold tracking-[0.22em] text-goldLight uppercase">
+                        MIS AL-AWWALIYAH KARYAMUKTI
+                    </p>
+                </div>
+            </header>
+
+            <!-- Baris Kategori & Rubrikasi -->
+            <div class="bg-gradient-to-r from-emeraldDeep via-emeraldPrimary to-emeraldDeep border-y border-goldPrimary/40 px-6 sm:px-12 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs text-white">
+                <div class="flex items-center gap-2.5">
+                    <span class="bg-goldPrimary text-emeraldDeep font-extrabold px-2.5 py-0.5 rounded text-[11px] uppercase tracking-wider">
+                        EKSTRAKURIKULER & SENI BUDAYA
+                    </span>
+                    <span class="text-emerald-100 font-medium hidden sm:inline">Menyongsong Hari Amal Bakti (HAB) ke-81 Kementerian Agama RI</span>
+                </div>
+                <div class="text-goldLight/90 font-medium tracking-wide">
+                    Rubrik: <span class="text-white font-semibold">Warta Madrasah</span>
+                </div>
+            </div>
+
+            <!-- 3. BAGIAN TENGAH: JUDUL BERITA DENGAN TIPOGRAFI TEGAS DAN ELEGAN -->
+            <section class="px-6 sm:px-12 pt-7 sm:pt-9 pb-5 text-center max-w-4xl mx-auto">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emeraldPrimary/10 border border-emeraldPrimary/25 text-emeraldPrimary text-[11px] font-bold tracking-wider uppercase mb-3.5 shadow-sm">
+                    <svg class="w-3.5 h-3.5 text-goldDark" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <span>Laporan Utama Kegiatan Peserta Didik</span>
+                </div>
+
+                <div class="relative px-2 sm:px-6 py-2">
+                    <h2 class="font-headline text-lg sm:text-xl md:text-2xl font-bold text-emeraldDeep leading-[1.38] tracking-normal uppercase">
+                        SIAP SAMBUT <span class="text-emeraldRich underline decoration-goldPrimary decoration-2 underline-offset-4">HAB KE-81 KEMENAG 2027</span>, SISWA DAN SISWI MIS AL-AWWALIYAH KARYAMUKTI ASAH KREATIVITAS MELALUI PELATIHAN TARI DANA-DANA MODERN
+                    </h2>
+                </div>
+
+                <!-- Aksen Ornamen Garis Emas Pendek -->
+                <div class="flex items-center justify-center gap-2 my-3">
+                    <span class="h-[1.5px] w-10 bg-gradient-to-r from-transparent to-goldPrimary"></span>
+                    <span class="w-1.5 h-1.5 rotate-45 bg-goldPrimary"></span>
+                    <span class="h-[1.5px] w-10 bg-gradient-to-l from-transparent to-goldPrimary"></span>
+                </div>
+
+                <!-- Sub-lead Ringkas -->
+                <p class="text-xs sm:text-sm md:text-[15px] text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
+                    Wujud sinergi pengembangan bakat, kedisiplinan karakter, dan pelestarian warisan seni budaya daerah Gorontalo di lingkungan madrasah.
+                </p>
+
+                <!-- Garis Pemisah Emas & Metadata Redaksi -->
+                <div class="mt-5 pt-3.5 border-t border-slate-200/80 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-[11px] sm:text-xs text-slate-500">
+                    <span class="flex items-center gap-1.5 font-semibold text-emeraldPrimary">
+                        <svg class="w-3.5 h-3.5 text-goldDark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+                        Tim Redaksi Habari Lo
+                    </span>
+                    <span class="text-goldPrimary">•</span>
+                    <span>MIS Al-Awwaliyah Karyamukti, Kab. Gorontalo</span>
+                    <span class="text-goldPrimary">•</span>
+                    <span class="text-emeraldRich font-semibold">Dokumentasi Resmi Madrasah</span>
+                </div>
+            </section>
+
+            <!-- 4. BAGIAN UTAMA: FOTO DOKUMENTASI KEGIATAN EKSTRAKURIKULER (KOMPOSISI 16:9 / DUAL FRAME PROFESIONAL) -->
+            <section class="px-6 sm:px-12 pb-6">
+                <div class="bg-gradient-to-b from-emeraldDeep to-emeraldPrimary p-3 sm:p-5 rounded-2xl gold-border-gradient">
+                    
+                    <!-- Grid 2 Foto Dokumentasi Utama -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-5">
+                        
+                        <!-- Bingkai Foto 1 -->
+                        <div class="photo-frame relative group rounded-xl overflow-hidden bg-emeraldDeep aspect-[16/11] border border-goldPrimary/40 shadow-lg">
+                            <img id="img-doc-1" 
+                                 src="WhatsApp Image 2026-11-13 at 15.03.05.jpeg" 
+                                 onerror="this.onerror=null;this.src='https://placehold.co/960x660/033629/f3e5ab?text=Dokumentasi+01:+Latihan+Formasi+Tari+Dana-Dana+Modern';"
+                                 alt="Dokumentasi 1: Pelatihan Gerak Langkah dan Formasi Tari Dana-Dana Modern Siswa MIS Al-Awwaliyah Karyamukti" 
+                                 class="photo-enhanced w-full h-full object-cover object-center cursor-pointer"
+                                 onclick="triggerSingleUpload(1)">
+                            
+                            <!-- Overlay Tombol Ganti Foto (Hanya muncul saat hover / non-print) -->
+                            <div onclick="triggerSingleUpload(1)" class="no-print absolute inset-0 bg-emeraldDeep/55 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center cursor-pointer p-4 text-center">
+                                <div class="bg-goldPrimary text-emeraldDeep p-2.5 rounded-full mb-2 shadow-lg">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                </div>
+                                <span class="text-white font-bold text-xs sm:text-sm tracking-wide">Ganti Foto Dokumentasi 1</span>
+                                <span class="text-goldLight text-[11px] mt-0.5">Kualitas HD • Pencahayaan Natural</span>
+                            </div>
+
+                            <!-- Label Sudut Foto -->
+                            <div class="absolute top-3 left-3 bg-emeraldDeep/85 backdrop-blur-sm text-goldLight text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded border border-goldPrimary/40">
+                                Dokumentasi 01
+                            </div>
+                            <input type="file" id="input-doc-1" accept="image/*" class="hidden" onchange="handleSinglePhoto(event, 1)">
+                        </div>
+
+                        <!-- Bingkai Foto 2 -->
+                        <div class="photo-frame relative group rounded-xl overflow-hidden bg-emeraldDeep aspect-[16/11] border border-goldPrimary/40 shadow-lg">
+                            <img id="img-doc-2" 
+                                 src="WhatsApp Image 2026-11-13 at 15.03.08.jpeg" 
+                                 onerror="this.onerror=null;this.src='https://placehold.co/960x660/033629/f3e5ab?text=Dokumentasi+02:+Kekompakan+Gerak+Tari+Dana-Dana+Modern';"
+                                 alt="Dokumentasi 2: Kekompakan Gerak Tangan dan Pendampingan Pelatihan Tari Dana-Dana Modern MIS Al-Awwaliyah Karyamukti" 
+                                 class="photo-enhanced w-full h-full object-cover object-center cursor-pointer"
+                                 onclick="triggerSingleUpload(2)">
+                            
+                            <!-- Overlay Tombol Ganti Foto -->
+                            <div onclick="triggerSingleUpload(2)" class="no-print absolute inset-0 bg-emeraldDeep/55 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center cursor-pointer p-4 text-center">
+                                <div class="bg-goldPrimary text-emeraldDeep p-2.5 rounded-full mb-2 shadow-lg">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                </div>
+                                <span class="text-white font-bold text-xs sm:text-sm tracking-wide">Ganti Foto Dokumentasi 2</span>
+                                <span class="text-goldLight text-[11px] mt-0.5">Kualitas HD • Pencahayaan Natural</span>
+                            </div>
+
+                            <!-- Label Sudut Foto -->
+                            <div class="absolute top-3 left-3 bg-emeraldDeep/85 backdrop-blur-sm text-goldLight text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded border border-goldPrimary/40">
+                                Dokumentasi 02
+                            </div>
+                            <input type="file" id="input-doc-2" accept="image/*" class="hidden" onchange="handleSinglePhoto(event, 2)">
+                        </div>
+
+                    </div>
+
+                    <!-- Caption Foto Jurnalistik -->
+                    <div class="mt-3.5 pt-3 border-t border-goldPrimary/25 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-emerald-50/90">
+                        <p class="leading-relaxed">
+                            <span class="text-goldPrimary font-bold uppercase tracking-wider mr-1.5">Keterangan Foto:</span>
+                            Peserta didik MIS Al-Awwaliyah Karyamukti bersama pembimbing berlatih menyelaraskan langkah dan gerak tangan dalam kegiatan ekstrakurikuler Tari Dana-Dana Modern di halaman madrasah sebagai persiapan menyambut Hari Amal Bakti (HAB) ke-81 Kementerian Agama Kabupaten Gorontalo Tahun 2027.
+                        </p>
+                        <span class="text-[11px] text-goldLight/80 font-medium shrink-0 italic">Dok. MIS Al-Awwaliyah Karyamukti</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. BAGIAN BAWAH FOTO: ISI RINGKASAN BERITA DALAM BEBERAPA PARAGRAF -->
+            <section id="article-body" class="px-6 sm:px-12 py-6 sm:py-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- Kolom Utama Naskah Berita (8 Kolom) -->
+                    <div class="lg:col-span-8 space-y-5 text-slate-700 text-[15px] sm:text-base leading-[1.82] text-justify">
+                        
+                        <p class="journal-dropcap">
+                            <strong>GORONTALO, HABARI LO</strong> — Suasana halaman MIS Al-Awwaliyah Karyamukti tampak semarak dan penuh energi positif saat pelaksanaan kegiatan ekstrakurikuler seni tari. Di bawah naungan pepohonan rindang lingkungan madrasah yang asri, para peserta didik mengikuti sesi pelatihan <strong>Tari Dana-Dana Modern</strong> bersama pembimbing sebagai bagian dari pembinaan bakat, minat, serta persiapan dini menyongsong perayaan Hari Amal Bakti (HAB) ke-81 Kementerian Agama di lingkungan Kemenag Kabupaten Gorontalo Tahun 2027.
+                        </p>
+
+                        <p>
+                            Sejak awal sesi latihan dimulai, antusiasme dan semangat belajar para peserta didik terlihat sangat tinggi. Dengan penuh keceriaan namun tetap menjaga fokus, para siswa mengikuti setiap instruksi hitungan gerak, mulai dari pola langkah kaki yang dinamis hingga ayunan tangan yang menjadi ciri khas kesenian tradisional Gorontalo. Sentuhan koreografi modern yang dipadukan dengan pakem Tari Dana-Dana membuat proses latihan terasa segar, ekspresif, dan mudah diterima oleh generasi muda madrasah.
+                        </p>
+
+                        <p>
+                            Dalam proses pembinaan tersebut, pembimbing ekstrakurikuler secara telaten mendampingi dan mengarahkan setiap detail gerakan peserta didik. Pendekatan latihan difokuskan pada penyelarasan irama, ketepatan formasi barisan, serta penguatan kekompakan antarpersonal agar tercipta harmonisasi gerak yang indah dipandang. Pembimbing turut memberikan contoh gerakan secara langsung di tengah formasi sehingga siswa lebih mudah memahami transisi koreografi dari satu bagian ke bagian berikutnya.
+                        </p>
+
+                        <p>
+                            Kegiatan ekstrakurikuler seni dan budaya seperti Tari Dana-Dana Modern ini memiliki peran strategis dalam dunia pendidikan madrasah. Selain menjadi wadah pelestarian kearifan lokal dan budaya daerah Gorontalo yang bernafaskan nilai-nilai Islami, proses latihan yang terstruktur juga efektif melatih kedisiplinan, rasa tanggung jawab, keberanian tampil di ruang publik, serta menumbuhkan kreativitas dan kerja sama tim pada diri setiap peserta didik.
+                        </p>
+
+                        <p>
+                            Melalui persiapan yang matang dan berkesinambungan sejak dini, keluarga besar MIS Al-Awwaliyah Karyamukti menaruh harapan besar agar para peserta didik dapat tampil percaya diri serta memberikan persembahan terbaik pada momentum Hari Amal Bakti (HAB) ke-81 Kementerian Agama Kabupaten Gorontalo Tahun 2027 mendatang. Partisipasi aktif ini diharapkan tidak hanya mengharumkan nama madrasah, tetapi juga menjadi bukti nyata bahwa siswa madrasah mampu berprestasi secara seimbang dalam bidang akademik, keagamaan, maupun seni budaya.
+                        </p>
+
+                    </div>
+
+                    <!-- Kolom Samping / Sorotan Redaksi (4 Kolom) -->
+                    <aside class="lg:col-span-4 space-y-5">
+                        
+                        <!-- Kartu Nilai Utama Kegiatan -->
+                        <div class="bg-gradient-to-br from-emeraldDeep to-emeraldPrimary text-white p-6 rounded-2xl border border-goldPrimary/40 shadow-lg relative overflow-hidden">
+                            <div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full border border-goldPrimary/20 pointer-events-none"></div>
+                            <div class="flex items-center gap-2 text-goldPrimary text-xs font-bold uppercase tracking-widest mb-3">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                                <span>Poin Utama Berita</span>
+                            </div>
+                            <h3 class="font-headline text-lg font-bold text-goldLight leading-snug mb-4">
+                                Sinergi Pelestarian Budaya & Pembentukan Karakter Siswa
+                            </h3>
+                            <ul class="space-y-3 text-xs sm:text-sm text-emerald-50/95">
+                                <li class="flex items-start gap-2.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-goldPrimary mt-2 shrink-0"></span>
+                                    <span><strong>Pelestarian Budaya Daerah:</strong> Mengenalkan dan melestarikan Tari Dana-Dana Gorontalo dengan sentuhan kreatif modern.</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-goldPrimary mt-2 shrink-0"></span>
+                                    <span><strong>Pendidikan Karakter:</strong> Mengasah kedisiplinan, kekompakan, keberanian, dan sportivitas peserta didik.</span>
+                                </li>
+                                <li class="flex items-start gap-2.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-goldPrimary mt-2 shrink-0"></span>
+                                    <span><strong>Target Prestasi:</strong> Persiapan optimal menyambut HAB ke-81 Kemenag Kabupaten Gorontalo Tahun 2027.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Box Identitas Agenda -->
+                        <div class="bg-white p-5 rounded-2xl border border-emeraldPrimary/15 shadow-sm">
+                            <div class="text-[11px] font-bold uppercase tracking-widest text-goldDark mb-1">Agenda Strategis</div>
+                            <h4 class="font-bold text-emeraldDeep text-base mb-2">Hari Amal Bakti (HAB) ke-81 Kementerian Agama RI</h4>
+                            <div class="gold-divider my-3"></div>
+                            <dl class="space-y-2 text-xs text-slate-600">
+                                <div class="flex justify-between gap-2">
+                                    <dt class="font-semibold text-slate-500">Satuan Pendidikan:</dt>
+                                    <dd class="font-bold text-emeraldPrimary text-right">MIS Al-Awwaliyah Karyamukti</dd>
+                                </div>
+                                <div class="flex justify-between gap-2">
+                                    <dt class="font-semibold text-slate-500">Program:</dt>
+                                    <dd class="font-medium text-slate-800 text-right">Ekstrakurikuler Seni Tari</dd>
+                                </div>
+                                <div class="flex justify-between gap-2">
+                                    <dt class="font-semibold text-slate-500">Materi Latihan:</dt>
+                                    <dd class="font-medium text-slate-800 text-right">Tari Dana-Dana Modern</dd>
+                                </div>
+                                <div class="flex justify-between gap-2">
+                                    <dt class="font-semibold text-slate-500">Wilayah:</dt>
+                                    <dd class="font-medium text-slate-800 text-right">Kemenag Kab. Gorontalo</dd>
+                                </div>
+                            </dl>
+                        </div>
+
+                    </aside>
+
+                </div>
+            </section>
+
+            <!-- 6. FOOTER RESMI MADRASAH -->
+            <footer class="islamic-pattern-bg text-white px-6 sm:px-12 py-7 border-t-2 border-goldPrimary text-center relative">
+                <div class="max-w-3xl mx-auto">
+                    <!-- Ornamen Kecil Tengah -->
+                    <div class="flex items-center justify-center gap-3 mb-3">
+                        <span class="h-[1px] w-12 bg-goldPrimary/60"></span>
+                        <svg class="w-5 h-5 text-goldPrimary" viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="12,2 15,9 22,12 15,15 12,22 9,15 2,12 9,9"/>
+                        </svg>
+                        <span class="h-[1px] w-12 bg-goldPrimary/60"></span>
+                    </div>
+
+                    <!-- Tagline Wajib Sesuai Ketentuan -->
+                    <p class="font-headline italic text-base sm:text-xl md:text-2xl font-semibold text-goldLight tracking-wide">
+                        “Membangun Generasi Islami, Kreatif, Berbudaya, dan Berprestasi”
+                    </p>
+
+                    <div class="mt-4 pt-4 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] sm:text-xs text-emerald-100/80">
+                        <span class="font-masthead font-bold tracking-widest text-goldPrimary">HABARI LO • MIS AL-AWWALIYAH KARYAMUKTI</span>
+                        <span>Media Informasi Resmi Kegiatan & Prestasi Madrasah</span>
+                    </div>
+                </div>
+            </footer>
+
+        </article>
+    </main>
+
+    <!-- Skrip Interaktif Portal Redaksi -->
+    <script>
+        // Menampilkan notifikasi toast elegan tanpa menggunakan alert()
+        function showToast(message) {
+            const toast = document.getElementById('toast-message');
+            const toastText = document.getElementById('toast-text');
+            if (!toast || !toastText) return;
+
+            toastText.textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            clearTimeout(window.toastTimeout);
+            window.toastTimeout = setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3200);
+        }
+
+        // Mengaktifkan atau menonaktifkan penyempurnaan pencahayaan & kontras natural
+        let isEnhanced = true;
+        function togglePhotoEnhancement() {
+            isEnhanced = !isEnhanced;
+            const imgs = [document.getElementById('img-doc-1'), document.getElementById('img-doc-2')];
+            const label = document.getElementById('enhance-label');
+            
+            imgs.forEach(img => {
+                if (img) {
+                    if (isEnhanced) {
+                        img.classList.add('photo-enhanced');
+                    } else {
+                        img.classList.remove('photo-enhanced');
+                    }
+                }
+            });
+
+            label.textContent = isEnhanced ? 'Peningkatan HD: Aktif' : 'Peningkatan HD: Asli';
+            showToast(isEnhanced ? 'Penyempurnaan pencahayaan & ketajaman natural diaktifkan.' : 'Menampilkan pencahayaan asli foto.');
+        }
+
+        // Memicu input file untuk foto tertentu (1 atau 2)
+        function triggerSingleUpload(slotNumber) {
+            const input = document.getElementById(`input-doc-${slotNumber}`);
+            if (input) input.click();
+        }
+
+        // Memproses unggahan satu foto dengan tetap menjaga keaslian & peningkatan natural via CSS
+        function handleSinglePhoto(event, slotNumber) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgElement = document.getElementById(`img-doc-${slotNumber}`);
+                imgElement.src = e.target.result;
+                showToast(`Foto dokumentasi ${slotNumber} berhasil dimuat dalam kualitas HD.`);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Memproses unggahan 2 foto sekaligus dari tombol toolbar atas
+        function handleMultiplePhotos(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            if (files[0]) {
+                const reader1 = new FileReader();
+                reader1.onload = function(e) {
+                    document.getElementById('img-doc-1').src = e.target.result;
+                };
+                reader1.readAsDataURL(files[0]);
+            }
+
+            if (files[1]) {
+                const reader2 = new FileReader();
+                reader2.onload = function(e) {
+                    document.getElementById('img-doc-2').src = e.target.result;
+                };
+                reader2.readAsDataURL(files[1]);
+                showToast('Kedua foto dokumentasi kegiatan berhasil dimuat!');
+            } else {
+                showToast('Foto pertama dimuat. Klik bingkai kedua untuk menambah foto ke-2.');
+            }
+        }
+
+        // Menyalin seluruh teks berita ke clipboard menggunakan execCommand agar kompatibel di iFrame
+        function copyArticleText() {
+            const headline = "SIAP SAMBUT HAB KE-81 KEMENAG 2027, SISWA DAN SISWI MIS AL-AWWALIYAH KARYAMUKTI ASAH KREATIVITAS MELALUI PELATIHAN TARI DANA-DANA MODERN";
+            const paragraphs = Array.from(document.querySelectorAll('#article-body p')).map(p => p.innerText.trim()).join('\n\n');
+            const footer = "Membangun Generasi Islami, Kreatif, Berbudaya, dan Berprestasi";
+            
+            const fullText = `HABARI LO - MIS AL-AWWALIYAH KARYAMUKTI\n\n${headline}\n\n${paragraphs}\n\n"${footer}"`;
+
+            const textArea = document.createElement('textarea');
+            textArea.value = fullText;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-9999px';
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                const label = document.getElementById('copy-label');
+                label.textContent = 'Tersalin!';
+                showToast('Naskah berita lengkap berhasil disalin ke papan klip.');
+                setTimeout(() => {
+                    label.textContent = 'Salin Naskah';
+                }, 2500);
+            } catch (err) {
+                showToast('Gagal menyalin teks secara otomatis.');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+    </script>
+</body>
+</html>
